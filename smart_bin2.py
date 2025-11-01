@@ -9,7 +9,7 @@ import threading
 
 MAX_M = 5
 waste_level2 = 0
-lock = threading.Lock()  #to prevent race-condition that may happen as loop_start() runs onMessage fun in another thread
+lock = threading.Lock()  #to prevent race-condition that may happen as loop_start() fun runs onMessage fun in another thread
 
 def onConnect(client_2, userdata, flags, rc):
 	if rc == 0:
@@ -53,8 +53,8 @@ while True:
 	with lock:
 		waste_level2 = min( (waste_level2 + throw), 100 )
 
-	#to make the value published increase with only 5, I mean if it was increased by 1, the level still = 0
-	waste_level_pub = round(waste_level2 / 5) * 5
+	#to make the value published increase with only 10, I mean if it was increased by 1, the level still = 0
+	waste_level_pub = round(waste_level2 / 10) * 10
 
 	client_2.publish("bin_2/waste_level", waste_level_pub, 2, False)
 	#at the previous step we put the retain to false & qos=0 to make no congestion in the network
