@@ -14,7 +14,7 @@ bins_level = [0, 0, 0, 0, 0]
 # }
 
 
-max_itr = 0
+cur_itr = 0
 
 #policy will store the actions to be done while being in a specified state , default actions is 0 = "wait"
 policy = np.zeros( (11, 11, 11, 11, 11) , dtype=int)
@@ -82,7 +82,7 @@ def onMessage(client, userdata, msg):
 def value_iteration():
 	# global actions
 	global policy
-	global max_itr
+	global cur_itr
 
 	#then we have at each bin, state level 0 && 10% -> 100% which is 11 state for each bin, index from 0 to 10 
 	v_state = np.zeros( (11, 11, 11, 11, 11) )
@@ -102,6 +102,7 @@ def value_iteration():
 	
 	while delta_iteration > delta_0 :
 		
+		cur_itr += 1
 		delta_iteration = 0
 		for i in range(10, -1, -1):
 			for j in range(10, -1, -1):
@@ -163,20 +164,19 @@ def value_iteration():
 							delta_iteration = max(delta_iteration, abs(v_state[i, j, k, m, n] - temp))
 
 		print(f"delta_iteration = {delta_iteration}")
-		print(f"max_itr = {max_itr}")
-		max_itr += 1
-		if max_itr > 10000:
+		print(f"cur_itr = {cur_itr}")
+		if cur_itr >= 10000:
 			print("Value iteration doesn't converge")
 			sys.exit(-1)
 
 	#ending the value iteration function
-	print(f"Value iteration converged after {max_itr}")
+	print(f"Value iteration converged after {cur_itr}")
 	return policy
 
 
 
 def fun_next_stat(i, j, k, m, n, a):
-	global max_itr
+	global cur_itr
 	result = []
 	cost = 0
 	prob = (1/32) if a == 0 else (1/16)
@@ -222,7 +222,7 @@ def fun_next_stat(i, j, k, m, n, a):
 
 
 	#ending the fun_next_stat 
-	# if max_itr > 3:
+	# if cur_itr > 3:
 	# 	print(result)
 	return result
 
