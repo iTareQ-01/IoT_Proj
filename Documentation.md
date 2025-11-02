@@ -107,7 +107,13 @@ $$
 - They sends to MQTT topics (e.g., `bin_1/waste_level`).				
 				
 **Outputs**				
-- **Central Station** receives fill precentage, processes data, and applies decision logic (value iteration) then sends commands back to bins under MQTT topics (e.g., `central/empty1`).				
+- **Central Station** receives fill precentage, processes data, and applies decision logic (value iteration) then sends commands back to bins under MQTT topics (e.g., `central/empty1`).
+
+  
+
+https://github.com/user-attachments/assets/33a9368b-a733-494c-8863-1b68546d3a5b
+
+
 				
 				
 **MQTT Flow:**				
